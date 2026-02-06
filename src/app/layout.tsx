@@ -12,16 +12,24 @@ export const metadata: Metadata = {
   keywords: ['e-commerce', 'store audit', 'shopify', 'conversion optimization', 'AI'],
 };
 
+// Clerk requires publishableKey - wrap conditionally for build compatibility
+const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ClerkProvider>
+  const content = (
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   );
+
+  // Only wrap with ClerkProvider if the key is available
+  if (hasClerkKey) {
+    return <ClerkProvider>{content}</ClerkProvider>;
+  }
+
+  return content;
 }
