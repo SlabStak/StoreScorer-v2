@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuditWithFixes, updateAudit } from '@/lib/db/audits';
-import { getPaymentByStripeSession, completePayment } from '@/lib/db/payments';
+import { getAuditWithRelations, updateAudit } from '@/lib/db/audits';
+import { completePayment } from '@/lib/db/payments';
 import { createAuditJob, getJobByAuditId } from '@/lib/db/audit-jobs';
 import { getStripe } from '@/lib/stripe';
 
@@ -20,7 +20,7 @@ export async function GET(
     const shouldKick = req.nextUrl.searchParams.get('kick') === '1';
 
     // Get audit with fixes
-    let auditResult = await getAuditWithFixes(SYSTEM_USER_ID, id);
+    let auditResult = await getAuditWithRelations(SYSTEM_USER_ID, id);
 
     if (!auditResult.success || !auditResult.data) {
       return NextResponse.json(
@@ -55,7 +55,7 @@ export async function GET(
             });
 
             // Refresh audit data
-            auditResult = await getAuditWithFixes(SYSTEM_USER_ID, id);
+            auditResult = await getAuditWithRelations(SYSTEM_USER_ID, id);
             if (auditResult.success && auditResult.data) {
               audit = auditResult.data;
             }

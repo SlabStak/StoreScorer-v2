@@ -30,7 +30,7 @@ export async function GET() {
     await client.query('SELECT 1');
     client.release();
     checks.database = { status: 'ok' };
-  } catch (error: unknown) {
+  } catch {
     checks.database = { status: 'error', message: 'Cannot connect to database' };
   }
 
