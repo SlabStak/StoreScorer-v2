@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { reviewId, action } = parseResult.data;
-    const status = action === 'approve' ? 'approved' : 'rejected';
+    const status = action === 'approve' ? 'APPROVED' : 'REJECTED';
 
     const userId = authContext?.userId || 'system';
     const result = await updateReviewStatus(userId, reviewId, status);
