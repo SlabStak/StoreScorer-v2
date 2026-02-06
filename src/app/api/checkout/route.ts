@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     const auditResult = await createAudit(SYSTEM_USER_ID, {
       domain: normalizedDomain,
       email: normalizedEmail,
-      status: 'payment_pending',
+      status: 'PAYMENT_PENDING',
       marketingConsent: marketingConsent || false,
       createdIp: ip,
       userAgent,
@@ -153,7 +153,7 @@ export async function POST(req: NextRequest) {
       stripeSessionId: session.id,
       amount: 2999, // $29.99
       currency: 'usd',
-      status: 'pending',
+      status: 'PENDING',
     });
 
     if (!paymentResult.success) {

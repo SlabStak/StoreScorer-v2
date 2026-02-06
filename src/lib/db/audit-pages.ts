@@ -51,7 +51,7 @@ export async function createAuditPage(
     return { success: true, data: mapPageSummary(result.data) };
   }
 
-  return result as DbResult<AuditPageSummary>;
+  return result as unknown as DbResult<AuditPageSummary>;
 }
 
 export async function getAuditPage(
@@ -67,7 +67,7 @@ export async function getAuditPage(
     return { success: true, data: mapPage(result.data) };
   }
 
-  return result as DbResult<AuditPage>;
+  return result as unknown as DbResult<AuditPage>;
 }
 
 export async function listAuditPages(
@@ -90,7 +90,7 @@ export async function listAuditPages(
     };
   }
 
-  return result as DbResult<{ items: AuditPageSummary[]; total: number }>;
+  return result as unknown as DbResult<{ items: AuditPageSummary[]; total: number }>;
 }
 
 export async function updateAuditPageAnalysis(
@@ -107,7 +107,7 @@ export async function updateAuditPageAnalysis(
     return { success: true, data: mapPage(result.data) };
   }
 
-  return result as DbResult<AuditPage>;
+  return result as unknown as DbResult<AuditPage>;
 }
 
 export async function bulkCreateAuditPages(

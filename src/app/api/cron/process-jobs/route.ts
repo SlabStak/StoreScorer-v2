@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
       try {
         // Update audit status to processing
         await updateAudit(SYSTEM_USER_ID, job.auditId, {
-          status: 'crawling',
+          status: 'CRAWLING',
         });
 
         // TODO: Implement actual crawling and analysis here

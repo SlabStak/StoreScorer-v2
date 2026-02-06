@@ -29,7 +29,7 @@ export async function createAuditJob(
     return { success: true, data: mapJob(result.data) };
   }
 
-  return result as DbResult<AuditJob>;
+  return result as unknown as DbResult<AuditJob>;
 }
 
 export async function getPendingJobs(
@@ -52,7 +52,7 @@ export async function getPendingJobs(
     };
   }
 
-  return result as DbResult<{ items: AuditJob[]; total: number }>;
+  return result as unknown as DbResult<{ items: AuditJob[]; total: number }>;
 }
 
 export async function lockJob(
@@ -76,7 +76,7 @@ export async function lockJob(
     };
   }
 
-  return result as DbResult<{ id: string; locked: boolean; lockedAt: Date }>;
+  return result as unknown as DbResult<{ id: string; locked: boolean; lockedAt: Date }>;
 }
 
 export async function completeJob(
@@ -114,5 +114,5 @@ export async function getJobByAuditId(
     return { success: true, data: mapJob(result.data) };
   }
 
-  return result as DbResult<AuditJob>;
+  return result as unknown as DbResult<AuditJob>;
 }

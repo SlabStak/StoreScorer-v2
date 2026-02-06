@@ -43,7 +43,7 @@ export async function createAuditFix(
     return { success: true, data: mapFix(result.data) };
   }
 
-  return result as DbResult<AuditFix>;
+  return result as unknown as DbResult<AuditFix>;
 }
 
 export async function getAuditFix(
@@ -59,7 +59,7 @@ export async function getAuditFix(
     return { success: true, data: mapFix(result.data) };
   }
 
-  return result as DbResult<AuditFix>;
+  return result as unknown as DbResult<AuditFix>;
 }
 
 export async function listAuditFixes(
@@ -81,7 +81,7 @@ export async function listAuditFixes(
     };
   }
 
-  return result as DbResult<{ items: AuditFix[]; total: number }>;
+  return result as unknown as DbResult<{ items: AuditFix[]; total: number }>;
 }
 
 export async function bulkCreateAuditFixes(
@@ -119,5 +119,5 @@ export async function deleteAuditFixesForAudit(
     };
   }
 
-  return result as DbResult<{ deletedCount: number }>;
+  return result as unknown as DbResult<{ deletedCount: number }>;
 }

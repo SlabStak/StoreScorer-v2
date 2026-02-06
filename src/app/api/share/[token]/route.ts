@@ -28,7 +28,7 @@ export async function GET(
       );
     }
 
-    if (audit.status !== 'completed' || !audit.synthesis) {
+    if (audit.status !== 'COMPLETED' || !audit.synthesis) {
       return NextResponse.json(
         { error: 'Report not ready' },
         { status: 404 }

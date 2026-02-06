@@ -29,14 +29,22 @@ export async function createPayment(
 ): Promise<DbResult<Payment>> {
   const result = await callFunction<Record<string, unknown>>(
     'create_payment',
-    [userId, input.auditId, input.stripeSessionId, input.amount, input.currency ?? 'usd']
+    [
+      userId,
+      input.auditId,
+      input.stripeSessionId,
+      input.stripePaymentId ?? null,
+      input.amount,
+      input.currency ?? 'usd',
+      input.status ?? 'PENDING',
+    ]
   );
 
   if (result.success && result.data) {
     return { success: true, data: mapPayment(result.data) };
   }
 
-  return result as DbResult<Payment>;
+  return result as unknown as DbResult<Payment>;
 }
 
 /**
@@ -55,7 +63,7 @@ export async function getPayment(
     return { success: true, data: mapPayment(result.data) };
   }
 
-  return result as DbResult<Payment>;
+  return result as unknown as DbResult<Payment>;
 }
 
 /**
@@ -74,7 +82,7 @@ export async function getPaymentByStripeSession(
     return { success: true, data: mapPayment(result.data) };
   }
 
-  return result as DbResult<Payment>;
+  return result as unknown as DbResult<Payment>;
 }
 
 /**
@@ -99,7 +107,7 @@ export async function updatePayment(
     return { success: true, data: mapPayment(result.data) };
   }
 
-  return result as DbResult<Payment>;
+  return result as unknown as DbResult<Payment>;
 }
 
 /**
@@ -107,14 +115,14 @@ export async function updatePayment(
  */
 export async function completePayment(
   userId: string,
-  stripeSessionId: string,
-  stripePaymentId: string
+  paymentId: string,
+  stripePaymentId?: string
 ): Promise<DbResult<{ paymentId: string; auditId: string; status: string }>> {
   const result = await callFunction<{
     payment_id: string;
     audit_id: string;
     status: string;
-  }>('complete_payment', [userId, stripeSessionId, stripePaymentId]);
+  }>('complete_payment', [userId, paymentId, stripePaymentId ?? null]);
 
   if (result.success && result.data) {
     return {
@@ -127,5 +135,5 @@ export async function completePayment(
     };
   }
 
-  return result as DbResult<{ paymentId: string; auditId: string; status: string }>;
+  return result as unknown as DbResult<{ paymentId: string; auditId: string; status: string }>;
 }

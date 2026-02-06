@@ -57,7 +57,7 @@ export async function createReview(
     return { success: true, data: mapReview(result.data) };
   }
 
-  return result as DbResult<Review>;
+  return result as unknown as DbResult<Review>;
 }
 
 export async function getReview(
@@ -73,7 +73,7 @@ export async function getReview(
     return { success: true, data: mapReview(result.data) };
   }
 
-  return result as DbResult<Review>;
+  return result as unknown as DbResult<Review>;
 }
 
 export async function listReviews(
@@ -101,7 +101,7 @@ export async function listReviews(
     };
   }
 
-  return result as DbResult<ReviewListResult>;
+  return result as unknown as DbResult<ReviewListResult>;
 }
 
 export async function listTestimonials(
@@ -123,7 +123,7 @@ export async function listTestimonials(
     };
   }
 
-  return result as DbResult<{ items: Testimonial[]; total: number }>;
+  return result as unknown as DbResult<{ items: Testimonial[]; total: number }>;
 }
 
 export async function updateReviewStatus(
@@ -140,5 +140,5 @@ export async function updateReviewStatus(
     return { success: true, data: mapReview(result.data) };
   }
 
-  return result as DbResult<Review>;
+  return result as unknown as DbResult<Review>;
 }

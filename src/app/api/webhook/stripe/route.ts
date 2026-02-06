@@ -54,20 +54,22 @@ export async function POST(req: NextRequest) {
 
     if (existingPayment.success && existingPayment.data) {
       // Update existing payment
+      const paymentIntentId = session.payment_intent;
       await completePayment(
         SYSTEM_USER_ID,
         existingPayment.data.id,
-        (session.payment_intent as string) || undefined
+        typeof paymentIntentId === 'string' ? paymentIntentId : undefined
       );
     } else {
       // Create new payment record
+      const paymentIntentId = session.payment_intent;
       await createPayment(SYSTEM_USER_ID, {
         auditId,
         stripeSessionId: session.id,
-        stripePaymentId: (session.payment_intent as string) || undefined,
+        stripePaymentId: typeof paymentIntentId === 'string' ? paymentIntentId : undefined,
         amount: session.amount_total ?? 2999,
         currency: session.currency ?? 'usd',
-        status: 'completed',
+        status: 'COMPLETED',
       });
     }
 
@@ -75,7 +77,7 @@ export async function POST(req: NextRequest) {
     const auditResult = await getAudit(SYSTEM_USER_ID, auditId);
     if (auditResult.success && auditResult.data) {
       await updateAudit(SYSTEM_USER_ID, auditId, {
-        status: 'payment_complete',
+        status: 'PAYMENT_COMPLETE',
         ...(customerEmail ? { email: customerEmail } : {}),
       });
     }

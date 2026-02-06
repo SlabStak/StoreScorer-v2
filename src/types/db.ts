@@ -122,6 +122,7 @@ export interface Audit {
   shareActive: boolean;
   shareViewCount: number;
   mekellScore: number | null;
+  overallScore: number | null;
   synthesis: Record<string, unknown> | null;
   errorMessage: string | null;
   warningMessage: string | null;
@@ -138,6 +139,7 @@ export interface Audit {
   createdAt: Date;
   updatedAt: Date;
   completedAt: Date | null;
+  fixes?: AuditFix[];
 }
 
 export interface AuditWithRelations extends Audit {
@@ -149,6 +151,7 @@ export interface AuditWithRelations extends Audit {
 export interface AuditCreateInput {
   domain: string;
   email?: string;
+  status?: AuditStatus;
   marketingConsent?: boolean;
   createdIp?: string;
   userAgent?: string;
@@ -192,8 +195,10 @@ export interface Payment {
 export interface PaymentCreateInput {
   auditId: string;
   stripeSessionId: string;
+  stripePaymentId?: string;
   amount: number;
   currency?: string;
+  status?: PaymentStatus;
 }
 
 export interface PaymentUpdateInput {

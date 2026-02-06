@@ -45,7 +45,7 @@ export async function createPageView(
     };
   }
 
-  return result as DbResult<{ id: string; path: string; createdAt: Date }>;
+  return result as unknown as DbResult<{ id: string; path: string; createdAt: Date }>;
 }
 
 export async function getPageViewAnalytics(
@@ -91,7 +91,7 @@ export async function getPageViewAnalytics(
     };
   }
 
-  return result as DbResult<{
+  return result as unknown as DbResult<{
     granularity: string;
     startDate: Date;
     endDate: Date;
@@ -127,7 +127,7 @@ export async function getTopPages(
     };
   }
 
-  return result as DbResult<{ items: TopPage[]; days: number }>;
+  return result as unknown as DbResult<{ items: TopPage[]; days: number }>;
 }
 
 // =============================================================================
@@ -161,7 +161,7 @@ export async function createConversionEvent(
     };
   }
 
-  return result as DbResult<{ id: string; eventType: string; createdAt: Date }>;
+  return result as unknown as DbResult<{ id: string; eventType: string; createdAt: Date }>;
 }
 
 export async function getConversionFunnel(
@@ -197,7 +197,7 @@ export async function getConversionFunnel(
     };
   }
 
-  return result as DbResult<{
+  return result as unknown as DbResult<{
     startDate: Date;
     endDate: Date;
     funnel: ConversionFunnelStage[];
@@ -232,7 +232,7 @@ export async function createRateLimitEvent(
     };
   }
 
-  return result as DbResult<{ id: string; key: string; type: string; createdAt: Date }>;
+  return result as unknown as DbResult<{ id: string; key: string; type: string; createdAt: Date }>;
 }
 
 export async function checkRateLimit(
@@ -267,7 +267,7 @@ export async function checkRateLimit(
     };
   }
 
-  return result as DbResult<RateLimitCheck>;
+  return result as unknown as DbResult<RateLimitCheck>;
 }
 
 export async function cleanupRateLimitEvents(
@@ -286,5 +286,5 @@ export async function cleanupRateLimitEvents(
     };
   }
 
-  return result as DbResult<{ deletedCount: number }>;
+  return result as unknown as DbResult<{ deletedCount: number }>;
 }

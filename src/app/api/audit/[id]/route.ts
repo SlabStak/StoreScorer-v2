@@ -32,7 +32,7 @@ export async function GET(
     let audit = auditResult.data;
 
     // Optional payment reconciliation
-    if (shouldReconcile && (audit.status === 'pending' || audit.status === 'payment_pending')) {
+    if (shouldReconcile && (audit.status === 'PENDING' || audit.status === 'PAYMENT_PENDING')) {
       if (audit.payment?.stripeSessionId) {
         try {
           const stripe = getStripe();
@@ -42,15 +42,16 @@ export async function GET(
             const customerEmail = session.customer_details?.email || session.customer_email;
 
             // Complete the payment
+            const paymentIntentId = session.payment_intent;
             await completePayment(
               SYSTEM_USER_ID,
               audit.payment.id,
-              (session.payment_intent as string) || undefined
+              typeof paymentIntentId === 'string' ? paymentIntentId : undefined
             );
 
             // Update audit status
             await updateAudit(SYSTEM_USER_ID, id, {
-              status: 'payment_complete',
+              status: 'PAYMENT_COMPLETE',
               ...(customerEmail ? { email: customerEmail } : {}),
             });
 
@@ -69,7 +70,7 @@ export async function GET(
     // Optional processing kick
     if (
       shouldKick &&
-      (audit.status === 'payment_complete' || audit.status === 'crawling' || audit.status === 'analyzing')
+      (audit.status === 'PAYMENT_COMPLETE' || audit.status === 'CRAWLING' || audit.status === 'ANALYZING')
     ) {
       const existingJob = await getJobByAuditId(SYSTEM_USER_ID, id);
 

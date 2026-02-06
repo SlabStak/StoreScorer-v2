@@ -17,6 +17,7 @@ import {
  * Map database row (snake_case) to TypeScript object (camelCase)
  */
 function mapAudit(row: Record<string, unknown>): Audit {
+  const mekellScore = row.mekell_score as number | null;
   return {
     id: row.id as string,
     domain: row.domain as string,
@@ -25,7 +26,8 @@ function mapAudit(row: Record<string, unknown>): Audit {
     shareToken: row.share_token as string,
     shareActive: row.share_active as boolean,
     shareViewCount: row.share_view_count as number,
-    mekellScore: row.mekell_score as number | null,
+    mekellScore,
+    overallScore: (row.overall_score as number | null) ?? mekellScore,
     synthesis: row.synthesis as Record<string, unknown> | null,
     errorMessage: row.error_message as string | null,
     warningMessage: row.warning_message as string | null,
@@ -120,7 +122,7 @@ export async function createAudit(
     return { success: true, data: mapAudit(result.data) };
   }
 
-  return result as DbResult<Audit>;
+  return result as unknown as DbResult<Audit>;
 }
 
 /**
@@ -139,7 +141,7 @@ export async function getAudit(
     return { success: true, data: mapAudit(result.data) };
   }
 
-  return result as DbResult<Audit>;
+  return result as unknown as DbResult<Audit>;
 }
 
 /**
@@ -158,7 +160,7 @@ export async function getAuditByShareToken(
     return { success: true, data: mapAudit(result.data) };
   }
 
-  return result as DbResult<Audit>;
+  return result as unknown as DbResult<Audit>;
 }
 
 /**
@@ -185,7 +187,7 @@ export async function getAuditWithRelations(
     };
   }
 
-  return result as DbResult<AuditWithRelations>;
+  return result as unknown as DbResult<AuditWithRelations>;
 }
 
 /**
@@ -219,7 +221,7 @@ export async function updateAudit(
     return { success: true, data: mapAudit(result.data) };
   }
 
-  return result as DbResult<Audit>;
+  return result as unknown as DbResult<Audit>;
 }
 
 /**
@@ -260,7 +262,7 @@ export async function listAuditsForUser(
     };
   }
 
-  return result as DbResult<AuditListResult>;
+  return result as unknown as DbResult<AuditListResult>;
 }
 
 /**
@@ -291,7 +293,7 @@ export async function listAudits(
     };
   }
 
-  return result as DbResult<AuditListResult>;
+  return result as unknown as DbResult<AuditListResult>;
 }
 
 /**
@@ -313,5 +315,5 @@ export async function claimAuditsByEmail(
     };
   }
 
-  return result as DbResult<{ claimedCount: number }>;
+  return result as unknown as DbResult<{ claimedCount: number }>;
 }

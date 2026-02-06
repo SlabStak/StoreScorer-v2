@@ -1,4 +1,4 @@
-import { Pool, PoolClient, QueryResult } from 'pg';
+import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
 
 // Singleton pool with globalThis caching for development hot-reload
 const globalForPg = globalThis as unknown as { pgPool: Pool | undefined };
@@ -62,7 +62,7 @@ export async function callFunction<T>(
 /**
  * Execute raw SQL query (use sparingly - prefer callFunction)
  */
-export async function query<T>(
+export async function query<T extends QueryResultRow>(
   sql: string,
   params: unknown[] = []
 ): Promise<QueryResult<T>> {

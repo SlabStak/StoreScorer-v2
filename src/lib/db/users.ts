@@ -47,7 +47,7 @@ export async function createUser(
     return { success: true, data: mapUser(result.data) };
   }
 
-  return result as DbResult<User>;
+  return result as unknown as DbResult<User>;
 }
 
 /**
@@ -66,7 +66,7 @@ export async function getUser(
     return { success: true, data: mapUser(result.data) };
   }
 
-  return result as DbResult<User>;
+  return result as unknown as DbResult<User>;
 }
 
 /**
@@ -85,7 +85,7 @@ export async function getUserByClerkId(
     return { success: true, data: mapUser(result.data) };
   }
 
-  return result as DbResult<User>;
+  return result as unknown as DbResult<User>;
 }
 
 /**
@@ -104,7 +104,7 @@ export async function getUserByEmail(
     return { success: true, data: mapUser(result.data) };
   }
 
-  return result as DbResult<User>;
+  return result as unknown as DbResult<User>;
 }
 
 /**
@@ -134,7 +134,7 @@ export async function updateUser(
     return { success: true, data: mapUser(result.data) };
   }
 
-  return result as DbResult<User>;
+  return result as unknown as DbResult<User>;
 }
 
 /**
@@ -175,5 +175,5 @@ export async function listUsers(
     };
   }
 
-  return result as DbResult<UserListResult>;
+  return result as unknown as DbResult<UserListResult>;
 }

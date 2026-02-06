@@ -27,7 +27,7 @@ export async function createChatMessage(
     return { success: true, data: mapMessage(result.data) };
   }
 
-  return result as DbResult<ChatMessage>;
+  return result as unknown as DbResult<ChatMessage>;
 }
 
 export async function listChatMessages(
@@ -50,7 +50,7 @@ export async function listChatMessages(
     };
   }
 
-  return result as DbResult<{ items: ChatMessage[]; total: number }>;
+  return result as unknown as DbResult<{ items: ChatMessage[]; total: number }>;
 }
 
 export async function countUserChatMessages(
@@ -72,7 +72,7 @@ export async function countUserChatMessages(
     };
   }
 
-  return result as DbResult<{ count: number; since: Date }>;
+  return result as unknown as DbResult<{ count: number; since: Date }>;
 }
 
 export async function deleteChatMessagesForAudit(
@@ -91,5 +91,5 @@ export async function deleteChatMessagesForAudit(
     };
   }
 
-  return result as DbResult<{ deletedCount: number }>;
+  return result as unknown as DbResult<{ deletedCount: number }>;
 }
